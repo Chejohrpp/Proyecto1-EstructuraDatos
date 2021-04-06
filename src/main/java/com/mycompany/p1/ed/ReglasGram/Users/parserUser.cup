@@ -1,0 +1,115 @@
+/*codigo de usuario*/
+package com.mycompany.p1.ed.ReglasGram.Users;
+import com.mycompany.p1.ed.Nodos.NodeAVL;
+import com.mycompany.p1.ed.arboles.AVL;
+import com.mycompany.p1.ed.objetos.*;
+import com.mycompany.p1.ed.listas.*;
+import com.mycompany.p1.ed.ReglasGram.Token;
+import java_cup.runtime.*;
+import com.mycompany.p1.ed.ReglasGram.Users.symUser.*;
+import java.util.ArrayList;
+import java.util.List;
+
+
+parser code {:
+
+	private List<String> listaErrores;
+	private AVL TreeUser;
+	private ListCircular listaImagenes;
+	private ListSimple lista;
+	private Usuario user; 
+
+	public ParserUser(LexerUser lex, ListCircular listaImagenes){
+		super(lex);
+		listaErrores = new ArrayList<String>();
+		TreeUser = new AVL();
+		this.listaImagenes = listaImagenes;
+		lista = new ListSimple();
+		user = new Usuario();
+	}
+	public void syntax_error(Symbol cur_token){
+			String nombreSimbolo = symbl_name_from_id(cur_token.sym);
+            Token token = (Token) cur_token.value;
+			String msgError =  "Error: ( "+ token.getLexema() +" ) -> {Linea: "+cur_token.left+", Columna: "+ cur_token.right +" }" ;
+			listaErrores.add(msgError);
+	}
+
+	public void report_fatal_error(String message, Object info){
+			String Elerror = "Error Irrecuperable: " + message + " -> {objeto: " + info + "}";
+			listaErrores.add(Elerror);	
+	}
+
+	public List getListaErrores(){
+		return listaErrores;
+	}
+	public AVL getListUsers(){
+		return TreeUser;
+	}
+
+	protected int error_sync_size(){
+		return 1;
+	}
+	private void insertarUsuarios(){
+		try{
+			user.setImagenes(lista);
+			TreeUser.add(user.getId(),user);
+		}catch(Exception e){
+			//System.out.println("error al insertar el usuario: " + e.getMessage());
+		}
+		user = new Usuario();
+		lista =  new ListSimple();
+	}
+	private void verificarImg(Token TokenImg){
+		String idImg = TokenImg.getLexema();
+		if(listaImagenes != null){
+			Imagen img =  listaImagenes.buscar(idImg);
+			if(img != null){
+				lista.add(idImg);
+			}else{
+				System.out.println("no esta la imagen: " + idImg);
+			}
+		}else{
+			System.out.println("No hay ninguna imagen cargada");
+		}
+		
+	}
+
+
+:}
+
+/*terminales*/
+terminal Token STRING,DOS_PUNTOS,COMA,SEMI,NUMERO;
+
+/*no terminales*/
+non terminal Token usuarios,usuario,idUser,usuario_sig,imagenes,imagen;
+
+
+/*precedencia*/
+
+/*gramatica*/
+start with usuarios;
+
+usuarios ::= 	usuarios usuario
+				|usuario
+				|error
+				;
+
+usuario ::=	idUser DOS_PUNTOS usuario_sig {:insertarUsuarios();:}
+			;
+
+idUser ::= 	STRING:s			{:user.setId(s.getLexema());:}
+			|NUMERO: n			{:user.setId(n.getLexema());:}
+			;
+
+usuario_sig ::=	imagenes SEMI
+				|SEMI
+				;
+
+imagenes ::= 	imagenes COMA imagen
+				|imagen
+				|error COMA
+				;
+
+imagen ::= STRING:s 	{:verificarImg(s);:}
+		|NUMERO:n 		{:verificarImg(n);:}
+		;

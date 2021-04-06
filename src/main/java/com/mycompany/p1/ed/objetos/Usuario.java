@@ -18,4 +18,21 @@ public class Usuario {
     public Usuario(){
         
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public ListSimple getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(ListSimple imagenes) {
+        this.imagenes = imagenes;
+    }
+    
 }

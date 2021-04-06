@@ -1,17 +1,13 @@
-digraph g{ subgraph cluster_arbol_capas{
+digraph g{ subgraph cluster_arbol_users{
 rankdir=TB;
 node[shape = record, style=filled, fillcolor=white];
-capascapa_4:C0->capascapa_2;
-capascapa_2:C0->capascapa_1;
-capascapa_1[label="capa_1"];
-capascapa_2:C1->capascapa_3;
-capascapa_3[label="capa_3"];
-capascapa_2[ label ="<C0>|capa_2|<C1>"];
-capascapa_4:C1->capascapa_6;
-capascapa_6:C0->capascapa_5;
-capascapa_5[label="capa_5"];
-capascapa_6:C1->capascapa_7;
-capascapa_7[label="capa_7"];
-capascapa_6[ label ="<C0>|capa_6|<C1>"];
-capascapa_4[ label ="<C0>|capa_4|<C1>"];
+usersuserB:C0->usersuserA;
+usersuserA[label="userA"];
+usersuserB:C1->usersuserD;
+usersuserD:C0->usersuserC;
+usersuserC[label="userC"];
+usersuserD:C1->usersusuarioZ;
+usersusuarioZ[label="usuarioZ"];
+usersuserD[ label ="<C0>|userD|<C1>"];
+usersuserB[ label ="<C0>|userB|<C1>"];
 } }

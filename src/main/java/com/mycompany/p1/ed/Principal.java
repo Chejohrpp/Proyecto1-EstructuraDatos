@@ -40,12 +40,23 @@ public class Principal {
                 for (File file : files) {
                     String ext = FilenameUtils.getExtension(file.getAbsolutePath());
                     if (ext.equals("cap")) {                        
-                        almacenamiento.cargarCapas(converterString(file));                        
-                    }else if(ext.equals("im")){
-                        almacenamiento.cargarImagenes(converterString(file));
-                    }else{
-                        almacenamiento.cargarUsuarios(converterString(file));
+                        almacenamiento.cargarCapas(converterString(file));     
+                        break;
                     }                   
+                }
+                for (File file : files) {
+                    String ext = FilenameUtils.getExtension(file.getAbsolutePath());
+                    if (ext.equals("im")) {                        
+                        almacenamiento.cargarImagenes(converterString(file));
+                        break;
+                    }
+                }
+                for (File file : files) {
+                    String ext = FilenameUtils.getExtension(file.getAbsolutePath());
+                    if (!ext.equals("cap") && !ext.equals("im") ) {                        
+                         almacenamiento.cargarUsuarios(converterString(file)); 
+                         break;
+                    }
                 }
                 break;
             }
@@ -53,7 +64,8 @@ public class Principal {
         boolean flag = true;
         Dibujar dibujar = new Dibujar();
         while(flag){
-            System.out.println("\nEscoja el numero de opcion que desea: ");
+            System.out.println("\nMenu Principal");
+            System.out.println("Escoja el numero de opcion que desea: ");
             System.out.println("1.Graficar Estado de memoria");
             System.out.println("2.Generacion de imagenes");
             System.out.println("3.Crear usuario");
@@ -77,26 +89,13 @@ public class Principal {
                     break;
                 }
             }
-        }        
-        /*ListSimple lista = new ListSimple();
-        lista.add("capa_1");
-        lista.add("capa_2");
-        lista.add("capa_3");
-        ListCircular list = new ListCircular();
-        list.add(new Imagen("img_7",lista));
-        list.add(new Imagen("img_4"));
-        list.add(new Imagen("img_2",lista));
-        list.add(new Imagen("img_3"));        
-        list.add(new Imagen("img_9"));        
-        list.add(new Imagen("img_5"));        
-        list.add(new Imagen("img_1"));        
-        Dibujar dibujar = new Dibujar();
-        dibujar.listaImagenes(list.getEstado());*/
+        }
     }
     private static void opcionDibujar(Dibujar dibujar){
         OUTER:            
         while (true) {
-            System.out.println("\nEscoja el numero de opcion");
+            System.out.println("\nGraficar Estado");
+            System.out.println("Escoja el numero de opcion");
             System.out.println("1.Ver lista de imagenes");
             System.out.println("2.Ver arbol de capas");
             System.out.println("3.Ver capa");

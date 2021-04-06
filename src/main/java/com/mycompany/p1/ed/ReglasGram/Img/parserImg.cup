@@ -1,0 +1,115 @@
+/*codigo de usuario*/
+package com.mycompany.p1.ed.ReglasGram.Img;
+import com.mycompany.p1.ed.Nodos.NodeAVL;
+import com.mycompany.p1.ed.arboles.AVL;
+import com.mycompany.p1.ed.objetos.*;
+import com.mycompany.p1.ed.listas.*;
+import com.mycompany.p1.ed.ReglasGram.Token;
+import java_cup.runtime.*;
+import com.mycompany.p1.ed.ReglasGram.Img.symImg.*;
+import java.util.ArrayList;
+import java.util.List;
+
+
+parser code {:
+
+	private List<String> listaErrores;
+	private AVL treeCapas;
+	private ListCircular listaImagenes;
+	private ListSimple lista;
+	private Imagen img; 
+
+	public ParserImg(LexerImg lex, AVL capas){
+		super(lex);
+		listaErrores = new ArrayList<String>();
+		treeCapas = capas;
+		listaImagenes = new ListCircular();
+		lista = new ListSimple();
+		img = new Imagen();
+	}
+	public void syntax_error(Symbol cur_token){
+			String nombreSimbolo = symbl_name_from_id(cur_token.sym);
+            Token token = (Token) cur_token.value;
+			String msgError =  "Error: ( "+ token.getLexema() +" ) -> {Linea: "+cur_token.left+", Columna: "+ cur_token.right +" }" ;
+			listaErrores.add(msgError);
+	}
+
+	public void report_fatal_error(String message, Object info){
+			String Elerror = "Error Irrecuperable: " + message + " -> {objeto: " + info + "}";
+			listaErrores.add(Elerror);	
+	}
+
+	public List getListaErrores(){
+		return listaErrores;
+	}
+	public ListCircular getListImgs(){
+		return listaImagenes;
+	}
+
+	protected int error_sync_size(){
+		return 1;
+	}
+	private void insertarImagenes(){
+		try{
+			img.setListaCapas(lista);
+			listaImagenes.add(img);
+		}catch(Exception e){
+			//System.out.println("error al insertar la imagen: " + e.getMessage());
+		}
+		img = new Imagen();
+		lista =  new ListSimple();
+	}
+	private void verificarCapa(Token Tokencapa){
+		String idCapa = Tokencapa.getLexema();
+		if(treeCapas != null){
+			NodeAVL capa =  treeCapas.find(idCapa);
+			if(capa != null){
+				lista.add(idCapa);
+			}else{
+				System.out.println("no esta la capa: " + idCapa);
+			}
+		}else{
+			System.out.println("No hay ninguna capa cargada");
+		}
+		
+	}
+
+
+:}
+
+/*terminales*/
+terminal Token STRING,LLAI,LLAD,NUMERO,COMA;
+
+/*no terminales*/
+non terminal Token imagenes,imagen,idImg,imagen_sig,capas,capa;
+
+
+/*precedencia*/
+
+/*gramatica*/
+start with imagenes;
+
+imagenes ::= 	imagenes imagen
+				|imagen
+				|error
+				;
+
+imagen ::=	idImg LLAI imagen_sig {:insertarImagenes();:}
+			;
+
+idImg ::= 	STRING:s			{:img.setId(s.getLexema());:}
+			|NUMERO: n			{:img.setId(n.getLexema());:}
+			;
+
+imagen_sig ::=	capas LLAD
+				|LLAD
+				;
+
+capas ::= 	capas COMA capa
+			|capa
+			|error COMA
+			;
+
+capa ::= STRING:s 	{:verificarCapa(s);:}
+		|NUMERO:n 	{:verificarCapa(n);:}
+		;
