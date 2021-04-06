@@ -1,0 +1,104 @@
+/*codigo de usuario*/
+package com.mycompany.p1.ed.ReglasGram.capas;
+import com.mycompany.p1.ed.Matrices.MatrizDispersa;
+import com.mycompany.p1.ed.arboles.AVL;
+import com.mycompany.p1.ed.objetos.Capa;
+import com.mycompany.p1.ed.ReglasGram.Token;
+import java_cup.runtime.*;
+import com.mycompany.p1.ed.ReglasGram.capas.symCapas.*;
+import java.util.ArrayList;
+import java.util.List;
+
+
+parser code {:
+
+	private List<String> listaErrores;
+	private AVL treeCapas;
+	private Capa onlyCap;
+	private MatrizDispersa MD;
+
+	public ParserCapas(LexerCapas lex){
+		super(lex);
+		listaErrores = new ArrayList<String>();
+		treeCapas = new AVL();
+		onlyCap = new Capa();
+		MD = new MatrizDispersa();
+	}
+	public void syntax_error(Symbol cur_token){
+			String nombreSimbolo = symbl_name_from_id(cur_token.sym);
+            Token token = (Token) cur_token.value;
+			String msgError =  "Error: ( "+ token.getLexema() +" ) -> {Linea: "+cur_token.left+", Columna: "+ cur_token.right +" }" ;
+			listaErrores.add(msgError);
+	}
+
+	public void report_fatal_error(String message, Object info){
+			String Elerror = "Error Irrecuperable: " + message + " -> {objeto: " + info + "}";
+			listaErrores.add(Elerror);	
+	}
+
+	public List getListaErrores(){
+		return listaErrores;
+	}
+	public AVL getTreeCapas(){
+		return treeCapas;
+	}
+
+	protected int error_sync_size(){
+		return 1;
+	}
+	private void insertarCapaTree(){
+		try{
+			onlyCap.setMatriz(MD);
+			treeCapas.add(onlyCap.getId(), onlyCap);
+			//onlyCap = new Capa();
+			//MD = new MatrizDispersa();
+		}catch(Exception e){
+			//System.out.println("error al insertar capa: " + e.getMessage());
+		}
+		onlyCap = new Capa();
+		MD = new MatrizDispersa();
+
+	}
+
+
+:}
+
+/*terminales*/
+terminal Token STRING,LLAI,LLAD,NUMERO,COMA,SEMI;
+
+/*no terminales*/
+non terminal Token capas,capa,id,parametros,parametro;
+
+
+/*precedencia*/
+
+/*gramatica*/
+start with capas;
+
+capas ::= 	capas capa
+			|capa
+			|error
+			;
+
+capa ::= 	id LLAI parametros LLAD	{:insertarCapaTree();:}					
+			;
+
+id ::= 	STRING:s	 	{:onlyCap.setId(s.getLexema());:}
+		|NUMERO:n 		{:onlyCap.setId(n.getLexema());:}
+		;
+
+
+parametros ::= 	parametros parametro
+				|parametro
+				;
+
+parametro ::=	NUMERO:fila COMA NUMERO:col COMA STRING:c SEMI	
+						{:
+						try{
+							MD.insertar(Integer.parseInt(col.getLexema()),Integer.parseInt(fila.getLexema()),c.getLexema());
+						}catch(Exception e){
+							System.out.println("Error al ingresar un nuevo nodoMatriz: " + e.getMessage());
+						}						
+						:}
+				|error COMA
+				;
