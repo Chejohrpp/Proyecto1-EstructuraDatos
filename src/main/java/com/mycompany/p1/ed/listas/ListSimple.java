@@ -20,6 +20,14 @@ public class ListSimple {
         primero = null;
         ult = null;
     }
+
+    public NodeLS getPrimero() {
+        return primero;
+    }
+
+    public NodeLS getUlt() {
+        return ult;
+    }  
     
     public boolean add(String id){
         if (id == null) {

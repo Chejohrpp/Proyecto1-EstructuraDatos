@@ -7,6 +7,7 @@ package com.mycompany.p1.ed;
 
 import com.mycompany.p1.ed.Informacion.Almacenamiento;
 import com.mycompany.p1.ed.Matrices.MatrizDispersa;
+import com.mycompany.p1.ed.Nodos.NodeAVL;
 import com.mycompany.p1.ed.arboles.AVLTree;
 import com.mycompany.p1.ed.listas.ListCircular;
 import com.mycompany.p1.ed.listas.ListSimple;
@@ -111,8 +112,26 @@ public class Principal {
                     dibujar.verTreeCapas(almacenamiento.getCapas().getEstado("capas"));
                     break OUTER;
                 case "3":
+                    System.out.println("Ingrese el codigo de la capa: ");
+                    String idCapa = scanner.nextLine();
+                    NodeAVL nodeCapa = almacenamiento.getCapas().find(idCapa);
+                    if (nodeCapa != null) {
+                        Capa capa = (Capa) nodeCapa.getObject();
+                        dibujar.verMatrizCapa(capa.getMatriz().getEstado(idCapa), idCapa);
+                    }else{
+                        System.out.println("No existe la capa: " + idCapa);
+                    }
                     break OUTER;
                 case "4":
+                    System.out.println("Ingrese el codigo de la imagen: ");
+                    String idImg = scanner.nextLine();
+                    Imagen img = almacenamiento.getImagenes().buscar(idImg);
+                    if (img != null) {
+                        String treeCapas = almacenamiento.getCapas().getEstado("capas");
+                        dibujar.VerImagenTreeCapas(img.getEstado(treeCapas,"capas", idImg), idImg);
+                    }else{
+                        System.out.println("No existe la imagen: " + idImg);
+                    }
                     break OUTER;
                 case "5":
                     dibujar.verTreeUser(almacenamiento.getUsuarios().getEstado("users"));

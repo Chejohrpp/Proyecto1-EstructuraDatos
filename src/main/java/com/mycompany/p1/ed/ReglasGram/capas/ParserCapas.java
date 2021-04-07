@@ -38,10 +38,11 @@ public class ParserCapas extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\013\000\002\002\004\000\002\002\004\000\002\002" +
-    "\003\000\002\002\003\000\002\003\006\000\002\004\003" +
-    "\000\002\004\003\000\002\005\004\000\002\005\003\000" +
-    "\002\006\010\000\002\006\004" });
+    "\000\015\000\002\002\004\000\002\002\004\000\002\002" +
+    "\003\000\002\002\003\000\002\003\005\000\002\005\004" +
+    "\000\002\005\003\000\002\004\003\000\002\004\003\000" +
+    "\002\006\004\000\002\006\003\000\002\007\010\000\002" +
+    "\007\004" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -49,20 +50,22 @@ public class ParserCapas extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\026\000\010\003\007\004\006\007\004\001\002\000" +
-    "\004\005\ufffb\001\002\000\010\002\uffff\004\uffff\007\uffff" +
-    "\001\002\000\004\005\ufffc\001\002\000\010\002\ufffe\004" +
-    "\ufffe\007\ufffe\001\002\000\010\002\030\004\006\007\004" +
-    "\001\002\000\004\005\012\001\002\000\006\003\015\007" +
-    "\013\001\002\000\004\010\022\001\002\000\010\003\015" +
-    "\006\020\007\013\001\002\000\004\010\017\001\002\000" +
-    "\010\003\ufff9\006\ufff9\007\ufff9\001\002\000\010\003\ufff7" +
-    "\006\ufff7\007\ufff7\001\002\000\010\002\ufffd\004\ufffd\007" +
-    "\ufffd\001\002\000\010\003\ufffa\006\ufffa\007\ufffa\001\002" +
-    "\000\004\007\023\001\002\000\004\010\024\001\002\000" +
-    "\004\004\025\001\002\000\004\011\026\001\002\000\010" +
-    "\003\ufff8\006\ufff8\007\ufff8\001\002\000\010\002\000\004" +
-    "\000\007\000\001\002\000\004\002\001\001\002" });
+    "\000\030\000\010\003\007\004\005\007\004\001\002\000" +
+    "\004\005\ufff9\001\002\000\004\005\ufffa\001\002\000\010" +
+    "\002\uffff\004\uffff\007\uffff\001\002\000\010\002\ufffe\004" +
+    "\ufffe\007\ufffe\001\002\000\010\002\032\004\005\007\004" +
+    "\001\002\000\004\005\012\001\002\000\010\003\015\006" +
+    "\014\007\013\001\002\000\004\010\024\001\002\000\010" +
+    "\002\ufffb\004\ufffb\007\ufffb\001\002\000\004\010\023\001" +
+    "\002\000\010\002\ufffd\004\ufffd\007\ufffd\001\002\000\010" +
+    "\003\015\006\021\007\013\001\002\000\010\003\ufff7\006" +
+    "\ufff7\007\ufff7\001\002\000\010\002\ufffc\004\ufffc\007\ufffc" +
+    "\001\002\000\010\003\ufff8\006\ufff8\007\ufff8\001\002\000" +
+    "\010\003\ufff5\006\ufff5\007\ufff5\001\002\000\004\007\025" +
+    "\001\002\000\004\010\026\001\002\000\004\004\027\001" +
+    "\002\000\004\011\030\001\002\000\010\003\ufff6\006\ufff6" +
+    "\007\ufff6\001\002\000\010\002\000\004\000\007\000\001" +
+    "\002\000\004\002\001\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -70,15 +73,15 @@ public class ParserCapas extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\026\000\010\002\007\003\004\004\010\001\001\000" +
+    "\000\030\000\010\002\007\003\005\004\010\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\006\003\026\004\010\001\001\000\002\001" +
-    "\001\000\006\005\013\006\015\001\001\000\002\001\001" +
-    "\000\004\006\020\001\001\000\002\001\001\000\002\001" +
+    "\001\001\000\006\003\030\004\010\001\001\000\002\001" +
+    "\001\000\010\005\015\006\016\007\017\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\004\007\021\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001" });
+    "\000\002\001\001\000\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -235,16 +238,34 @@ class CUP$ParserCapas$actions {
           return CUP$ParserCapas$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // capa ::= id LLAI parametros LLAD 
+          case 4: // capa ::= id LLAI capa_sig 
             {
               Token RESULT =null;
 		insertarCapaTree();
-              CUP$ParserCapas$result = parser.getSymbolFactory().newSymbol("capa",1, ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.elementAt(CUP$ParserCapas$top-3)), ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), RESULT);
+              CUP$ParserCapas$result = parser.getSymbolFactory().newSymbol("capa",1, ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.elementAt(CUP$ParserCapas$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), RESULT);
             }
           return CUP$ParserCapas$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // id ::= STRING 
+          case 5: // capa_sig ::= parametros LLAD 
+            {
+              Token RESULT =null;
+
+              CUP$ParserCapas$result = parser.getSymbolFactory().newSymbol("capa_sig",3, ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.elementAt(CUP$ParserCapas$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), RESULT);
+            }
+          return CUP$ParserCapas$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 6: // capa_sig ::= LLAD 
+            {
+              Token RESULT =null;
+
+              CUP$ParserCapas$result = parser.getSymbolFactory().newSymbol("capa_sig",3, ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), RESULT);
+            }
+          return CUP$ParserCapas$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 7: // id ::= STRING 
             {
               Token RESULT =null;
 		int sleft = ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()).left;
@@ -256,7 +277,7 @@ class CUP$ParserCapas$actions {
           return CUP$ParserCapas$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // id ::= NUMERO 
+          case 8: // id ::= NUMERO 
             {
               Token RESULT =null;
 		int nleft = ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()).left;
@@ -268,25 +289,25 @@ class CUP$ParserCapas$actions {
           return CUP$ParserCapas$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // parametros ::= parametros parametro 
+          case 9: // parametros ::= parametros parametro 
             {
               Token RESULT =null;
 
-              CUP$ParserCapas$result = parser.getSymbolFactory().newSymbol("parametros",3, ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.elementAt(CUP$ParserCapas$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), RESULT);
+              CUP$ParserCapas$result = parser.getSymbolFactory().newSymbol("parametros",4, ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.elementAt(CUP$ParserCapas$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), RESULT);
             }
           return CUP$ParserCapas$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // parametros ::= parametro 
+          case 10: // parametros ::= parametro 
             {
               Token RESULT =null;
 
-              CUP$ParserCapas$result = parser.getSymbolFactory().newSymbol("parametros",3, ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), RESULT);
+              CUP$ParserCapas$result = parser.getSymbolFactory().newSymbol("parametros",4, ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), RESULT);
             }
           return CUP$ParserCapas$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // parametro ::= NUMERO COMA NUMERO COMA STRING SEMI 
+          case 11: // parametro ::= NUMERO COMA NUMERO COMA STRING SEMI 
             {
               Token RESULT =null;
 		int filaleft = ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.elementAt(CUP$ParserCapas$top-5)).left;
@@ -305,16 +326,16 @@ class CUP$ParserCapas$actions {
 							System.out.println("Error al ingresar un nuevo nodoMatriz: " + e.getMessage());
 						}						
 						
-              CUP$ParserCapas$result = parser.getSymbolFactory().newSymbol("parametro",4, ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.elementAt(CUP$ParserCapas$top-5)), ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), RESULT);
+              CUP$ParserCapas$result = parser.getSymbolFactory().newSymbol("parametro",5, ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.elementAt(CUP$ParserCapas$top-5)), ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), RESULT);
             }
           return CUP$ParserCapas$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // parametro ::= error COMA 
+          case 12: // parametro ::= error COMA 
             {
               Token RESULT =null;
 
-              CUP$ParserCapas$result = parser.getSymbolFactory().newSymbol("parametro",4, ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.elementAt(CUP$ParserCapas$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), RESULT);
+              CUP$ParserCapas$result = parser.getSymbolFactory().newSymbol("parametro",5, ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.elementAt(CUP$ParserCapas$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCapas$stack.peek()), RESULT);
             }
           return CUP$ParserCapas$result;
 

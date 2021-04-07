@@ -1,13 +1,29 @@
-digraph g{ subgraph cluster_arbol_users{
+digraph g{ compound=true;
+subgraph cluster_img_4{
+style=filled;
+style=filled;
+color=white;
+node [shape=box,color=black];
+img_4img_4[label="img_4 "];
+img_4img_4->img_4capa_7;
+img_4capa_7->img_4capa_4;
+img_4capa_7[label="capa_7 "];
+img_4capa_4[label="capa_4 "];
+}
+subgraph cluster_arbol_capas{
 rankdir=TB;
 node[shape = record, style=filled, fillcolor=white];
-usersuserB:C0->usersuserA;
-usersuserA[label="userA"];
-usersuserB:C1->usersuserD;
-usersuserD:C0->usersuserC;
-usersuserC[label="userC"];
-usersuserD:C1->usersusuarioZ;
-usersusuarioZ[label="usuarioZ"];
-usersuserD[ label ="<C0>|userD|<C1>"];
-usersuserB[ label ="<C0>|userB|<C1>"];
-} }
+capascapa_5:C0->capascapa_3;
+capascapa_3:C0->capascapa_1;
+capascapa_1[label="capa_1"];
+capascapa_3:C1->capascapa_4;
+capascapa_4[label="capa_4"];
+capascapa_3[ label ="<C0>|capa_3|<C1>"];
+capascapa_5:C1->capascapa_7;
+capascapa_7:C0->capascapa_6;
+capascapa_6[label="capa_6"];
+capascapa_7[ label ="<C0>|capa_7|<C1>"];
+capascapa_5[ label ="<C0>|capa_5|<C1>"];
+}img_4capa_7->capascapa_7;
+img_4capa_4->capascapa_4;
+ }

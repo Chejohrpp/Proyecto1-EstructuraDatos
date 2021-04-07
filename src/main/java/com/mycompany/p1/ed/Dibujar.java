@@ -16,10 +16,10 @@ import java.util.logging.Logger;
  * @author sergi
  */
 public class Dibujar {
-    int paso;
+    
     
     public Dibujar(){
-        paso = 0;
+       
     }
     
     private void dibujarSistema(String estado, String nombreImg){
@@ -58,5 +58,11 @@ public class Dibujar {
      }
      public void verTreeUser(String estado){
          dibujarSistema(estado,"ArbolUsuarios");
+     }
+     public void verMatrizCapa(String estado, String nombreCapa){
+         dibujarSistema(estado,"Matriz_Capa_"+nombreCapa);
+     }
+     public void VerImagenTreeCapas(String estado, String nombreImagen){
+         dibujarSistema(estado,"Imagen_"+nombreImagen);
      }
 }

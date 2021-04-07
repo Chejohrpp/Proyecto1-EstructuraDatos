@@ -43,7 +43,7 @@ public class MatrizDispersa {
             }else{
                 NodeMatriz aux = cabecera;
                 while(aux.getSigFila() != null){
-                    if (aux.getSigFila().getY() < fila) {
+                    if (aux.getSigFila().getY() > fila) {
                         nuevo.setSigFila(aux.getSigFila());
                         aux.getSigFila().setAntFila(nuevo);
                         nuevo.setAntFila(aux);
@@ -78,7 +78,7 @@ public class MatrizDispersa {
             }else{
                 NodeMatriz aux = cabecera;
                 while(aux.getSigColumna() != null){
-                    if (aux.getSigColumna().getX() < columna) {
+                    if (aux.getSigColumna().getX() > columna) {
                         nuevo.setSigColumna(aux.getSigColumna());
                         aux.getSigColumna().setAntColumna(nuevo);
                         nuevo.setAntColumna(aux);
@@ -106,7 +106,7 @@ public class MatrizDispersa {
         NodeMatriz nuevo = nodito;
         int fila = nuevo.getY();
         int columna = nuevo.getX();
-        NodeMatriz inicioFila = obtenerFila(fila,true);
+        NodeMatriz  inicioFila = obtenerFila(fila,true);       
         NodeMatriz inicioColumna = obtenerColumna(columna,true);       
         /*insersion en columnas*/
         NodeMatriz cabecera = inicioColumna.getSigFila();
@@ -123,8 +123,8 @@ public class MatrizDispersa {
             {
                 NodeMatriz aux = cabecera;
                 boolean insertado = false;
-                while(aux != null){
-                    if (aux.getSigFila().getY() < fila) {
+                while(aux.getSigFila() != null){
+                    if (aux.getSigFila().getY() > fila) {
                         nuevo.setSigFila(aux.getSigFila());
                         aux.getSigFila().setAntFila(nuevo);
                         nuevo.setAntFila(aux);
@@ -157,7 +157,7 @@ public class MatrizDispersa {
                 NodeMatriz aux = cabecera;
                 boolean insertado = false;
                 while(aux.getSigColumna() != null){
-                    if (aux.getSigColumna().getX() < columna) {
+                    if (aux.getSigColumna().getX() > columna) {
                         nuevo.setSigColumna(aux.getSigColumna());
                         aux.getSigColumna().setAntColumna(nuevo);
                         nuevo.setAntColumna(aux);
@@ -221,7 +221,101 @@ public class MatrizDispersa {
     //graficar
     public String getEstado(String capa){
         String estado = "subgraph cluster_"+capa+"{\nstyle=filled;\nstyle=filled;\ncolor=white;\nnode [shape=box,color=black];\n";
+        NodeMatriz aux = inicio;
+        if (inicio == null) {
+            return estado + "}";
+        }
+        if (aux.getSigFila() == null || aux.getSigColumna() == null) {
+            return estado +"}";
+        }
+        String inicioMat = capa+aux.getColor();
+        //columnas
+        NodeMatriz auxCol = aux.getSigColumna();
+        String sigCol = capa+auxCol.getColor();        
+        estado += inicioMat +"->"+sigCol+"[constraint=false];\n";
+        estado +=  inicioMat + "[label=\""+aux.getColor()+"\"];\n";
+        while(auxCol != null){
+            String actual = capa+auxCol.getColor();
+            if (auxCol.getSigColumna() != null) {
+                String sig = capa+auxCol.getSigColumna().getColor();
+                estado += actual +"->"+sig+"[constraint=false];\n";
+            }
+            if (auxCol.getAntColumna() != null) {
+                String ant = capa+auxCol.getAntColumna().getColor();
+                estado += actual +"->"+ant+"[constraint=false];\n";
+            }
+            estado +=  actual + "[label=\""+auxCol.getColor()+"\"];\n"; 
+            auxCol = auxCol.getSigColumna();
+        }
+        //filas
+        NodeMatriz auxFila = aux.getSigFila();
+        String sigFila = capa+"_fila_"+auxFila.getColor();        
+        estado += inicioMat +"->"+sigFila+";\n";
+        while(auxFila != null){
+            String actual = capa+"_fila_"+auxFila.getColor();
+            if (auxFila.getSigFila() != null) {
+                String sig = capa+"_fila_"+auxFila.getSigFila().getColor();
+                estado += actual +"->"+sig+";\n";
+            }
+            if (auxFila.getAntFila() != null) {
+                String ant;
+                if (auxFila.getAntFila().getColor().equals("Matriz")) {
+                    ant = capa+auxFila.getAntFila().getColor();
+                }else{
+                    ant = capa+"_fila_"+auxFila.getAntFila().getColor();
+                }                
+                estado += actual +"->"+ant+";\n";
+            }
+            estado +=  actual + "[label=\""+auxFila.getColor()+"\"];\n";            
+            auxFila = auxFila.getSigFila();                    
+        }
         
+        //contenido
+        auxCol = aux.getSigColumna();
+        auxFila = aux.getSigFila();        
+        while(auxCol != null){            
+            NodeMatriz auxCont = auxCol.getSigFila();
+            while(auxCont != null){
+                String actual = "contenido_"+ (corXY(auxCont));
+                if (auxCont.getAntFila() != null) {
+                    String sig;
+                    if (auxCont.getAntFila().getY()==0) {
+                        sig = capa+auxCont.getAntFila().getColor();
+                        estado += sig +"->"+actual+";\n";
+                    }else{
+                        sig = "contenido_"+(corXY(auxCont.getAntFila()));
+                    }
+                    
+                    estado += actual +"->"+sig+";\n";/////////
+                }
+                if (auxCont.getSigFila() != null) {
+                    String sig = "contenido_"+(corXY(auxCont.getSigFila()));
+                    estado += actual +"->"+sig+";\n";///////
+                }
+                if (auxCont.getAntColumna() != null) {
+                    String sig;
+                    if (auxCont.getAntColumna().getX()==0) {
+                        sig = capa+"_fila_"+auxCont.getAntColumna().getColor();
+                        estado += sig +"->"+actual+"[constraint=false];\n";
+                    }else{
+                        sig = "contenido_"+(corXY(auxCont.getAntColumna()));
+                    }                   
+                    
+                    estado += actual +"->"+sig+"[constraint=false];\n";//
+                }
+                if (auxCont.getSigColumna() != null) {
+                    String sig = "contenido_"+(corXY(auxCont.getSigColumna()));
+                    estado += actual +"->"+sig+"[constraint=false];\n";
+                }                 
+                estado +=  actual + "[label=\""+auxCont.getColor()+"\"];\n"; 
+                auxCont = auxCont.getSigFila();
+            }
+            auxCol = auxCol.getSigColumna();
+        }
         return estado + "}";
+    }
+    
+    private String corXY(NodeMatriz node){
+        return ""+node.getX()+"_"+ node.getY()+"";
     }
 }

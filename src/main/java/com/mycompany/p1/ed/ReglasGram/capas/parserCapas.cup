@@ -67,7 +67,7 @@ parser code {:
 terminal Token STRING,LLAI,LLAD,NUMERO,COMA,SEMI;
 
 /*no terminales*/
-non terminal Token capas,capa,id,parametros,parametro;
+non terminal Token capas,capa,id,capa_sig,parametros,parametro;
 
 
 /*precedencia*/
@@ -80,8 +80,11 @@ capas ::= 	capas capa
 			|error
 			;
 
-capa ::= 	id LLAI parametros LLAD	{:insertarCapaTree();:}					
+capa ::= 	id LLAI capa_sig	{:insertarCapaTree();:}					
 			;
+capa_sig ::= 	parametros LLAD
+				|LLAD
+				;
 
 id ::= 	STRING:s	 	{:onlyCap.setId(s.getLexema());:}
 		|NUMERO:n 		{:onlyCap.setId(n.getLexema());:}
