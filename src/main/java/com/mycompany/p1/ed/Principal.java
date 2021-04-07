@@ -6,17 +6,14 @@
 package com.mycompany.p1.ed;
 
 import com.mycompany.p1.ed.Informacion.Almacenamiento;
-import com.mycompany.p1.ed.Matrices.MatrizDispersa;
 import com.mycompany.p1.ed.Nodos.NodeAVL;
-import com.mycompany.p1.ed.arboles.AVLTree;
-import com.mycompany.p1.ed.listas.ListCircular;
 import com.mycompany.p1.ed.listas.ListSimple;
 import com.mycompany.p1.ed.objetos.Capa;
 import com.mycompany.p1.ed.objetos.Imagen;
+import com.mycompany.p1.ed.objetos.Usuario;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 import org.apache.commons.io.FilenameUtils;
@@ -70,7 +67,7 @@ public class Principal {
             System.out.println("1.Graficar Estado de memoria");
             System.out.println("2.Generacion de imagenes");
             System.out.println("3.Crear usuario");
-            System.out.println("4.Elimianr Usuario");
+            System.out.println("4.Eliminar Usuario");
             System.out.println("5.Modificar Usuario");
             System.out.println("6.salir");
             String opcion = scanner.nextLine();
@@ -81,6 +78,59 @@ public class Principal {
                 }
                 case "2":{
                     
+                    break;
+                }
+                case "3":{
+                    System.out.println("Ingrese el nombre del usuario: ");                    
+                    String userName = scanner.nextLine();
+                    NodeAVL node = almacenamiento.getUsuarios().find(opcion);
+                    if (node != null) {
+                        System.out.println("El usuario " + userName + " ya existe");
+                        break;
+                    }
+                    Usuario nuevo = new Usuario();
+                    nuevo.setId(userName);
+                    ListSimple lista = new ListSimple();
+                    while(true){
+                        System.out.println("Ingrese el codigo de una imagen para agregarlo con el usuario\n O escirba null para salir");
+                        String op = scanner.nextLine();
+                        if (!op.equalsIgnoreCase("null")) {
+                            Imagen img = almacenamiento.getImagenes().buscar(op);
+                            if (img != null) {
+                                lista.add(op);
+                            }else{
+                                System.out.println("No existe la imagen escrita");
+                            }
+                        }else{
+                            break;
+                        }                        
+                    }
+                    nuevo.setImagenes(lista);
+                    almacenamiento.getUsuarios().add(userName, nuevo);
+                    break;
+                }
+                case "4":{
+                    System.out.println("Escriba el codigo a eliminar: ");
+                    String idUser = scanner.nextLine();
+                    NodeAVL nodeUser = almacenamiento.getUsuarios().find(idUser);
+                    if (nodeUser != null) {
+                        almacenamiento.getUsuarios().remove(idUser);
+                        System.out.println("Codigo Eliminado");
+                    }else{
+                        System.out.println("No existe el usuario " + idUser);
+                    }
+                    break;
+                }
+                case "5":{
+                    System.out.println("Escriba el codigo de usuario a modificar: ");
+                    String userName = scanner.nextLine();
+                    NodeAVL node = almacenamiento.getUsuarios().find(userName);
+                    if (node == null) {
+                        System.out.println("El usuario " + userName + " no existe");
+                        break;
+                    }                    
+                    modUser(node);    
+                    break;
                 }
                 case "6":{
                     flag = false;
@@ -142,6 +192,75 @@ public class Principal {
                     break;
             }
         }
+    }
+    private static void modUser(NodeAVL nodeUser){
+        boolean cambios = false;
+        Usuario user = (Usuario) nodeUser.getObject();
+        System.out.println("Elija la opcion que desea hacer con el usuario: ");
+        OUTER:
+        while(true){
+            System.out.println("1.Modificar el userName");
+            System.out.println("2.Modificar Lista de imagenes");
+            System.out.println("3.Regresar");
+            String opcion = scanner.nextLine();
+            switch(opcion){
+                case"1":{
+                    System.out.println("Escriba el nuevo nombre de usuario: ");
+                    String userName = scanner.nextLine();
+                    if (!verificarUser(userName)) {
+                        user.setId(userName);
+                        cambios = true;
+                    }else{
+                        System.out.println("el nombre de usuario no esta disponible");
+                        break;
+                    }
+                    break;
+                }
+                case"2":{
+                    System.out.println("\n1.Insertar imagen");
+                    System.out.println("2.Eliminar imagen");
+                    String op = scanner.nextLine();
+                    System.out.println("Esrciba el codigo de la imagen");
+                    String im = scanner.nextLine();
+                        switch(op){
+                            case "1":{                                
+                                Imagen img = almacenamiento.getImagenes().buscar(im);
+                                if (img != null) {
+                                    user.getImagenes().add(im);
+                                    System.out.println("Se agrego la imagen");
+                                }else{
+                                    System.out.println("No existe la imagen escrita");
+                                }
+                                break;
+                            }case "2":{
+                                if (user.getImagenes().eliminar(im)) {
+                                    System.out.println("se elimino la imagen");
+                                }else{
+                                    System.out.println("No se encontro la imagen");
+                                }
+                                break;
+                            } default:{
+                                break;
+                            }
+                        }
+                        break;
+                }
+                case "3":{
+                    if (cambios) {
+                        almacenamiento.getUsuarios().Modificar(nodeUser.getId(),user.getId(),user);
+                    }
+                    break OUTER;
+                }
+            }
+        }      
+        
+    }
+    private static boolean verificarUser(String id){
+        NodeAVL node = almacenamiento.getUsuarios().find(id);
+        if (node != null) {
+            return true;
+        }
+        return false;
     }
     
     private static String converterString(File file){

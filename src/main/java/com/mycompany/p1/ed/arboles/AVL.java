@@ -141,7 +141,17 @@ public class AVL {
             current = current.getId().compareTo(id) < 0 ? current.getDerc() : current.getIzq();
         }
         return current;
-    }    
+    }
+    public void Modificar(String id,String idNew, Object obj){
+        NodeAVL node = find(id);
+        if (node != null) {
+            raiz = delete(raiz,id);
+            raiz = insert(raiz,idNew,obj);
+            System.out.println(id +" modificado con exito");
+        }else{
+            System.out.println("No esta el usuario a modificar");
+        }
+    }
     //graficar
     public String getEstado(String nombre){
         String estado = "subgraph cluster_arbol_"+nombre+"{\nrankdir=TB;\n"
