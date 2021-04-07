@@ -54,7 +54,7 @@ public class Principal {
                 }
                 for (File file : files) {
                     String ext = FilenameUtils.getExtension(file.getAbsolutePath());
-                    if (!ext.equals("cap") && !ext.equals("im") ) {                        
+                    if (ext.equals("usr")) {                        
                          almacenamiento.cargarUsuarios(converterString(file)); 
                          break;
                     }
@@ -117,7 +117,7 @@ public class Principal {
                     NodeAVL nodeCapa = almacenamiento.getCapas().find(idCapa);
                     if (nodeCapa != null) {
                         Capa capa = (Capa) nodeCapa.getObject();
-                        dibujar.verMatrizCapa(capa.getMatriz().getEstado(idCapa), idCapa);
+                        dibujar.verMatrizCapa(capa.getMatriz().getEstado("id_capa_"+idCapa), idCapa);
                     }else{
                         System.out.println("No existe la capa: " + idCapa);
                     }
@@ -128,7 +128,7 @@ public class Principal {
                     Imagen img = almacenamiento.getImagenes().buscar(idImg);
                     if (img != null) {
                         String treeCapas = almacenamiento.getCapas().getEstado("capas");
-                        dibujar.VerImagenTreeCapas(img.getEstado(treeCapas,"capas", idImg), idImg);
+                        dibujar.VerImagenTreeCapas(img.getEstado(treeCapas,"capas", "img_"+idImg), idImg);
                     }else{
                         System.out.println("No existe la imagen: " + idImg);
                     }

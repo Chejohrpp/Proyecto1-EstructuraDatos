@@ -57,7 +57,7 @@ public class Imagen {
             return estado +"}";
         }
         String nodeInicio = img+id;
-        String nodosLista = listaCapas.getEstado(img, nodeInicio);
+        String nodosLista = listaCapas.getEstado(img+"_capas", nodeInicio);
         estado +=  nodeInicio + "[label=\""+ id+" \"];\n";
         estado += nodosLista;
         estado += "}\n";
@@ -65,7 +65,7 @@ public class Imagen {
         NodeLS aux = listaCapas.getPrimero();
         while(aux != null){
             String nombreCapa = aux.getId();
-            estado += img+nombreCapa+"->"+prexTree+nombreCapa+";\n";
+            estado += img+"_capas"+nombreCapa+"->"+prexTree+nombreCapa+";\n";
             aux = aux.getSig();
         }   
         return estado;
