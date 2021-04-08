@@ -23,7 +23,11 @@ public class ListCircular {
         ult = null;
     }
     
-    public void add(Imagen imagen){
+    public boolean add(Imagen imagen){
+        Imagen img = buscar(imagen.getId());
+        if (img != null) {
+            return false;
+        }
         NodeListC newNode = new NodeListC();
         newNode.setImg(imagen);
         if (primero == null) {
@@ -38,6 +42,7 @@ public class ListCircular {
             ult.setSig(primero);
             primero.setAnt(ult);
         }
+        return true;
     }
     
     private void ordenarLista(){

@@ -6,6 +6,7 @@
 package com.mycompany.p1.ed;
 
 import com.mycompany.p1.ed.Informacion.Almacenamiento;
+import com.mycompany.p1.ed.Matrices.MatrizDispersa;
 import com.mycompany.p1.ed.Nodos.NodeAVL;
 import com.mycompany.p1.ed.listas.ListSimple;
 import com.mycompany.p1.ed.objetos.Capa;
@@ -65,13 +66,13 @@ public class Principal {
             System.out.println("\nMenu Principal");
             System.out.println("Escoja el numero de opcion que desea: ");
             System.out.println("1.Graficar Estado de memoria");
-            System.out.println("2.Generar una imagen");
-            System.out.println("3.Crear usuario");
-            System.out.println("4.Eliminar Usuario");
-            System.out.println("5.Modificar Usuario");
-            System.out.println("6.Agregar una nueva imagen");
-            System.out.println("7.Eliminar una imagen");
-            System.out.println("7.salir");
+            System.out.println("2.Generar una imagen de la lista circular");
+            System.out.println("3.Generar una imagen por capa");
+            System.out.println("4.Crear usuario");
+            System.out.println("5.Eliminar Usuario");
+            System.out.println("6.Modificar Usuario");
+            System.out.println("7.Agregar una nueva imagen a la lista circular");            
+            System.out.println("8.salir");
             String opcion = scanner.nextLine();
             switch (opcion){
                 case "1":{
@@ -90,6 +91,20 @@ public class Principal {
                     break;
                 }
                 case "3":{
+                    System.out.println("Escriba el nombre de la capa");
+                    String idCapa = scanner.nextLine();
+                    NodeAVL Nodecapa = almacenamiento.getCapas().find(idCapa);
+                    if (Nodecapa != null) {
+                        Capa capa = (Capa) Nodecapa.getObject();
+                        int x = capa.getMatriz().getColmunaMayor();
+                        int y = capa.getMatriz().getFilaMayor();
+                        dibujar.generarImg(capa.getMatriz().getDibujo(x, y, null), idCapa);
+                    }else{
+                        System.out.println("No se encontro la capa: " + idCapa);
+                    }
+                    break;
+                }
+                case "4":{
                     System.out.println("Ingrese el nombre del usuario: ");                    
                     String userName = scanner.nextLine();
                     NodeAVL node = almacenamiento.getUsuarios().find(opcion);
@@ -101,12 +116,18 @@ public class Principal {
                     nuevo.setId(userName);
                     ListSimple lista = new ListSimple();
                     while(true){
-                        System.out.println("Ingrese el codigo de una imagen para agregarlo con el usuario\n O escirba null para salir");
+                        System.out.println("\nIngrese el codigo de una imagen para agregarlo con el usuario\n O escirba null para salir");
                         String op = scanner.nextLine();
                         if (!op.equalsIgnoreCase("null")) {
                             Imagen img = almacenamiento.getImagenes().buscar(op);
                             if (img != null) {
-                                lista.add(op);
+                                boolean bol = lista.add(op);
+                                if (bol) {
+                                    System.out.println("Se agrego la imagen");
+                                }else{
+                                    System.out.println("La imagen ya esta agregada");
+                                }
+                                
                             }else{
                                 System.out.println("No existe la imagen escrita");
                             }
@@ -118,7 +139,7 @@ public class Principal {
                     almacenamiento.getUsuarios().add(userName, nuevo);
                     break;
                 }
-                case "4":{
+                case "5":{
                     System.out.println("Escriba el codigo a eliminar: ");
                     String idUser = scanner.nextLine();
                     NodeAVL nodeUser = almacenamiento.getUsuarios().find(idUser);
@@ -130,7 +151,7 @@ public class Principal {
                     }
                     break;
                 }
-                case "5":{
+                case "6":{
                     System.out.println("Escriba el codigo de usuario a modificar: ");
                     String userName = scanner.nextLine();
                     NodeAVL node = almacenamiento.getUsuarios().find(userName);
@@ -140,8 +161,42 @@ public class Principal {
                     }                    
                     modUser(node);    
                     break;
+                } case "7":{
+                    System.out.println("Ingrese el nuevo codigo para la imagen");
+                    String idImg = scanner.nextLine();
+                    Imagen img = almacenamiento.getImagenes().buscar(idImg);
+                    if (img == null) {
+                             img = new Imagen();
+                             img.setId(idImg);
+                             ListSimple lista = new ListSimple();
+                             while(true){
+                                 System.out.println("\nIngrese el codigo de la capa a insertar\nEscriba null para salir");
+                                 String idCapa = scanner.nextLine();
+                                 if (!idCapa.equals("null")) {
+                                     NodeAVL node = almacenamiento.getCapas().find(idCapa);
+                                     if (node != null) {
+                                         boolean bol = lista.add(node.getId());
+                                         if (bol) {
+                                             System.out.println("capa Ingresada");                                          
+                                         }else{
+                                             System.out.println("La capa existe en la imagen");
+                                         }                                      
+                                         
+                                     }else{
+                                         System.out.println("La capa ingresada no se encuentra");
+                                     }
+                                 }else{
+                                     img.setListaCapas(lista);
+                                     almacenamiento.getImagenes().add(img);
+                                     break;
+                                 }
+                             }
+                    }else{
+                        System.out.println("Ya existe la imagen " + idImg);
+                    }
+                    break;
                 }
-                case "7":{
+                case "8":{
                     flag = false;
                     break;
                 }
@@ -205,7 +260,7 @@ public class Principal {
     private static void modUser(NodeAVL nodeUser){
         boolean cambios = false;
         Usuario user = (Usuario) nodeUser.getObject();
-        System.out.println("Elija la opcion que desea hacer con el usuario: ");
+        System.out.println("\nElija la opcion que desea hacer con el usuario: ");
         OUTER:
         while(true){
             System.out.println("1.Modificar el userName");

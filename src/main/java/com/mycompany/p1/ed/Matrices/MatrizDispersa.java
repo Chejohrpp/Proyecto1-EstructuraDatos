@@ -370,10 +370,12 @@ public class MatrizDispersa {
                     if (node != null) {
                         colorHex = node.getColor();
                     }else{
-                        node = colores.getNode(j,i);
-                        if (node != null) {
-                            colorHex = node.getColor();
-                        }
+                        if (colores != null) {
+                            node = colores.getNode(j,i);
+                            if (node != null) {
+                                colorHex = node.getColor();
+                            }
+                        }                        
                     }                    
                     estado += "<TD width=\"50px\" height=\"50px\" BGCOLOR=\""+colorHex+"\" ></TD>\n";
                 }                

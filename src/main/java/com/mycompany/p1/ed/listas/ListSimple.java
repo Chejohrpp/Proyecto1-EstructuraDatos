@@ -33,6 +33,9 @@ public class ListSimple {
         if (id == null) {
             return false;
         }
+        if (verificarId(id)) {
+            return false;
+        }
         NodeLS nuevo = new NodeLS();
         nuevo.setId(id);
         if (primero == null) {
@@ -81,7 +84,8 @@ public class ListSimple {
         do {
             if (aux.getId().equals(id)) {
                 return true;
-            }          
+            }
+            aux = aux.getSig();
         } while (aux != null);
         
         return false;

@@ -94,7 +94,7 @@ public class AVL {
         } else if (node.getId().compareTo(id) <  0 ) {
             node.setDerc(insert(node.getDerc(),id,object));            
         } else {
-            throw new RuntimeException("codigo duplicado!");
+            System.out.println("Codigo duplicado: " + id);
         }
         return rebalance(node);  
     }
