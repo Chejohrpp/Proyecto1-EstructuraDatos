@@ -65,11 +65,13 @@ public class Principal {
             System.out.println("\nMenu Principal");
             System.out.println("Escoja el numero de opcion que desea: ");
             System.out.println("1.Graficar Estado de memoria");
-            System.out.println("2.Generacion de imagenes");
+            System.out.println("2.Generar una imagen");
             System.out.println("3.Crear usuario");
             System.out.println("4.Eliminar Usuario");
             System.out.println("5.Modificar Usuario");
-            System.out.println("6.salir");
+            System.out.println("6.Agregar una nueva imagen");
+            System.out.println("7.Eliminar una imagen");
+            System.out.println("7.salir");
             String opcion = scanner.nextLine();
             switch (opcion){
                 case "1":{
@@ -77,7 +79,14 @@ public class Principal {
                     break;
                 }
                 case "2":{
-                    
+                    System.out.println("Escriba el nombre de la imagen");
+                    String img = scanner.nextLine();
+                    Imagen im = almacenamiento.getImagenes().buscar(img);
+                    if (im != null) {
+                        dibujar.generarImg(im.getImgen(almacenamiento.getCapas()),im.getId());
+                    }else{
+                        System.out.println("No existe la imagen");
+                    }
                     break;
                 }
                 case "3":{
@@ -132,7 +141,7 @@ public class Principal {
                     modUser(node);    
                     break;
                 }
-                case "6":{
+                case "7":{
                     flag = false;
                     break;
                 }
@@ -226,8 +235,12 @@ public class Principal {
                             case "1":{                                
                                 Imagen img = almacenamiento.getImagenes().buscar(im);
                                 if (img != null) {
-                                    user.getImagenes().add(im);
-                                    System.out.println("Se agrego la imagen");
+                                    if (!user.getImagenes().verificarId(im)) {
+                                        user.getImagenes().add(im);
+                                        System.out.println("Se agrego la imagen");
+                                    }else{
+                                        System.out.println("Esta imagen ya esta agregada a la lista del usuario");
+                                    }                                    
                                 }else{
                                     System.out.println("No existe la imagen escrita");
                                 }

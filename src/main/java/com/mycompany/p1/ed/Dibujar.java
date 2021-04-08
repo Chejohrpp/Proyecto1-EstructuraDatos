@@ -24,7 +24,14 @@ public class Dibujar {
     
     private void dibujarSistema(String estado, String nombreImg){
         String dibujar = "digraph g{ "+estado+" }";        
-        File fileDibujable = new File("img/dibujable.dot");
+         crearPng(dibujar,nombreImg);
+     }
+     private void DibujarImg(String estado, String nombreImg){
+         String dibujar = "digraph structs{node [shape=plaintext];\n "+estado+" }";
+         crearPng(dibujar,nombreImg);
+     }
+     private void crearPng(String dibujar, String nombreImg){
+         File fileDibujable = new File("img/dibujable.dot");
         if (!fileDibujable.exists()) {
             try {
                 fileDibujable.createNewFile();
@@ -47,7 +54,7 @@ public class Dibujar {
             fw.close();
         } catch (IOException e1) {
              //e1.printStackTrace();
-        } 
+        }         
      }
      
      public void listaImagenes(String estado){
@@ -65,4 +72,8 @@ public class Dibujar {
      public void VerImagenTreeCapas(String estado, String nombreImagen){
          dibujarSistema(estado,"Imagen_"+nombreImagen);
      }
+     public void generarImg(String estado, String img){
+         DibujarImg(estado,"Img_"+img);
+     }
+     
 }

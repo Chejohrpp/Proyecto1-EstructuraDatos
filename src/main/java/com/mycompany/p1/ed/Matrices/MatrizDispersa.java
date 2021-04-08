@@ -17,20 +17,42 @@ public class MatrizDispersa {
     private int cantNodos;
     private int cantFilas;
     private int cantColumnas;
+    private int colmunaMayor;
+    private int filaMayor;
     
     
     public MatrizDispersa(){
         inicio = new NodeMatriz(0,0,"Matriz");
-        cantNodos = cantFilas = cantColumnas = 0;
+        cantNodos = cantFilas = cantColumnas = colmunaMayor = filaMayor = 0;
     }
     
     public NodeMatriz CrearNodo(int x, int y , String color){
         return new NodeMatriz(x,y,color);
     }
+
+    public int getCantFilas() {
+        return cantFilas;
+    }
+
+    public int getCantColumnas() {
+        return cantColumnas;
+    }
+
+    public int getColmunaMayor() {
+        return colmunaMayor;
+    }
+
+    public int getFilaMayor() {
+        return filaMayor;
+    }
+    
     
     private NodeMatriz insertarFila(int fila){
         NodeMatriz cabecera = inicio.getSigFila();
         NodeMatriz nuevo = new NodeMatriz(0,fila,String.valueOf(fila));
+        if (fila > filaMayor) {
+            filaMayor = fila;
+        }
         if (cabecera == null) {
             inicio.setSigFila(nuevo);
             nuevo.setAntFila(inicio);
@@ -55,17 +77,18 @@ public class MatrizDispersa {
                 }
                 aux.setSigFila(nuevo);
                 nuevo.setAntFila(aux);
+                cantFilas++;
             }
-        }
-        if (fila > cantFilas) {
-            cantFilas = fila;
-        }        
+        }                
         return nuevo;
     }
     
     private NodeMatriz insertarColumna(int columna){
         NodeMatriz cabecera = inicio.getSigColumna();
         NodeMatriz nuevo = new NodeMatriz(columna,0,String.valueOf(columna));
+        if (columna > colmunaMayor) {
+            colmunaMayor = columna;
+        }
         if (cabecera == null) {
             inicio.setSigColumna(nuevo);
             nuevo.setAntColumna(inicio);
@@ -90,11 +113,9 @@ public class MatrizDispersa {
                 }
                 aux.setSigColumna(nuevo);
                 nuevo.setAntColumna(aux);
+                cantColumnas++;
             }
-        }
-        if (columna > cantColumnas) {
-            cantColumnas = columna;
-        }        
+        }                
         return nuevo;
     }
     
@@ -217,6 +238,20 @@ public class MatrizDispersa {
         }
         return null;
     }
+    public boolean modNode(int columna, int fila, String color){
+        NodeMatriz nodeColumna = obtenerColumna(columna, false);
+        if (nodeColumna != null) {
+            NodeMatriz aux = nodeColumna;
+            while(aux != null){
+                if (aux.getY() == fila) {
+                    aux.setColor(color);
+                    return true;
+                }
+                aux = aux.getSigFila();
+            }
+        }
+        return false;
+    }
     
     //graficar
     public String getEstado(String capa){
@@ -317,5 +352,35 @@ public class MatrizDispersa {
     
     private String corXY(NodeMatriz node){
         return ""+node.getX()+"_"+ node.getY()+"";
+    }
+    
+    public String getDibujo(int tamX, int tamY, MatrizDispersa colores){
+        String estado = "struct1 [label=<\n"
+                + "<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">\n";
+        for (int i = 0; i <= tamY; i++) {
+            estado += "<TR>\n";
+            for (int j = 0; j <= tamX; j++) {                
+                if (i == 0) {
+                    estado += "<TD width=\"50px\" height=\"50px\">"+j+"</TD>\n";
+                }else if (j == 0) {
+                    estado += "<TD width=\"50px\" height=\"50px\">"+i+"</TD>\n";
+                }else{
+                    String colorHex ="white";
+                    NodeMatriz node = getNode(j,i);
+                    if (node != null) {
+                        colorHex = node.getColor();
+                    }else{
+                        node = colores.getNode(j,i);
+                        if (node != null) {
+                            colorHex = node.getColor();
+                        }
+                    }                    
+                    estado += "<TD width=\"50px\" height=\"50px\" BGCOLOR=\""+colorHex+"\" ></TD>\n";
+                }                
+            }
+            estado += "</TR>\n";
+        }       
+        estado += "</TABLE>>];\n";
+        return estado;
     }
 }
