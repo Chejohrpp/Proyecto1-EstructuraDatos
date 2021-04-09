@@ -1,13 +1,65 @@
-digraph g{ subgraph cluster_arbol_users{
-rankdir=TB;
-node[shape = record, style=filled, fillcolor=white];
-usersuserB:C0->usersuserA;
-usersuserA:C0->usersuser;
-usersuser[label="user"];
-usersuserA[ label ="<C0>|userA|<C1>"];
-usersuserB:C1->usersusuarioZ;
-usersusuarioZ:C0->usersuserD;
-usersuserD[label="userD"];
-usersusuarioZ[ label ="<C0>|usuarioZ|<C1>"];
-usersuserB[ label ="<C0>|userB|<C1>"];
-} }
+digraph structs{node [shape=plaintext];
+ struct1 [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+<TR>
+<TD width="50px" height="50px">0</TD>
+<TD width="50px" height="50px">1</TD>
+<TD width="50px" height="50px">2</TD>
+<TD width="50px" height="50px">3</TD>
+<TD width="50px" height="50px">4</TD>
+<TD width="50px" height="50px">5</TD>
+<TD width="50px" height="50px">6</TD>
+<TD width="50px" height="50px">7</TD>
+<TD width="50px" height="50px">8</TD>
+<TD width="50px" height="50px">9</TD>
+</TR>
+<TR>
+<TD width="50px" height="50px">1</TD>
+<TD width="50px" height="50px" BGCOLOR="#DA1398" ></TD>
+<TD width="50px" height="50px" BGCOLOR="#DA1398" ></TD>
+<TD width="50px" height="50px" BGCOLOR="#DA1398" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="#DA1398" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="#DA1398" ></TD>
+</TR>
+<TR>
+<TD width="50px" height="50px">2</TD>
+<TD width="50px" height="50px" BGCOLOR="#C6C0C4" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="#C6C0C4" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+</TR>
+<TR>
+<TD width="50px" height="50px">3</TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="#C6C0C4" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+</TR>
+<TR>
+<TD width="50px" height="50px">4</TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="#C6C0C4" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+<TD width="50px" height="50px" BGCOLOR="white" ></TD>
+</TR>
+</TABLE>>];
+ }

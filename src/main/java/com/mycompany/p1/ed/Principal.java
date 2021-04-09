@@ -259,10 +259,10 @@ public class Principal {
     }
     private static void modUser(NodeAVL nodeUser){
         boolean cambios = false;
-        Usuario user = (Usuario) nodeUser.getObject();
-        System.out.println("\nElija la opcion que desea hacer con el usuario: ");
+        Usuario user = (Usuario) nodeUser.getObject();        
         OUTER:
         while(true){
+            System.out.println("\nElija la opcion que desea hacer con el usuario: ");
             System.out.println("1.Modificar el userName");
             System.out.println("2.Modificar Lista de imagenes");
             System.out.println("3.Regresar");
